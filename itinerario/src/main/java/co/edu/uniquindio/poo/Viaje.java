@@ -16,8 +16,10 @@ public class Viaje {
     private String preferenciaTransporte;
     private String tipoAlojamiento;
 
-
-    public Viaje(LocalDate fechaSalida, String duracionViajeDias, String dietasEspeciales, String preferenciaTransporte,String tipoAlojamiento){
+/*
+ * Atributos de la clase
+ */
+    public Viaje(LocalDate fechaSalida, String duracionViajeDias, String dietasEspeciales, String preferenciaTransporte,String tipoAlojamiento, Collection<ActividadPlaneada> actividadesPlaneadas){
         this.actividadesPlaneadas=new LinkedList<>();
         this.dietasEspeciales=dietasEspeciales;
         this.fechaSalida=fechaSalida;
@@ -26,6 +28,9 @@ public class Viaje {
         this.tipoAlojamiento=tipoAlojamiento;
     }
 
+    /*
+     * getters y setters de la clase
+     */
     public LocalDate getFechaSalida() {
         return fechaSalida;
     }
@@ -76,5 +81,59 @@ public class Viaje {
 
     public void registrarActividadPlaneada(ActividadPlaneada actividadPlaneada){
         actividadesPlaneadas.add(actividadPlaneada);
+    }
+
+
+    public static ViajeBuilder builder(){
+        return new ViajeBuilder();
+    }
+
+    /*
+     * Clase dentro de otra clase
+     * Clase Builder
+     */
+    public static class ViajeBuilder{
+    private LocalDate fechaSalida;
+    private String duracionViajeDias;
+    private Collection<ActividadPlaneada> actividadesPlaneadas;
+    private String dietasEspeciales;
+    private String preferenciaTransporte;
+    private String tipoAlojamiento;
+
+    private ViajeBuilder(){}
+
+    public ViajeBuilder fechaSalida(LocalDate fechaSalida){
+        this.fechaSalida=fechaSalida;
+        return this;
+    }
+
+    public ViajeBuilder duracionViajeDias(String duracionViajeDias){
+        this.duracionViajeDias=duracionViajeDias;
+        return this;
+    }
+
+    public ViajeBuilder actividadesPlaneadas(LinkedList<ActividadPlaneada> actividadesPlaneadas){
+        this.actividadesPlaneadas=actividadesPlaneadas;
+        return this;
+    }
+    
+    public ViajeBuilder dietasEspeciales(String dietasEspeciales){
+        this.dietasEspeciales=dietasEspeciales;
+        return this;
+    }
+
+    public ViajeBuilder preferenciaTransporte(String preferenciaTransporte){
+        this.preferenciaTransporte=preferenciaTransporte;
+        return this;
+    }
+
+    public ViajeBuilder tipoAlojamiento(String tipoAlojamiento){
+        this.tipoAlojamiento=tipoAlojamiento;
+        return this;
+    }
+
+    public Viaje build(){
+        return new Viaje(fechaSalida,duracionViajeDias, dietasEspeciales, preferenciaTransporte,tipoAlojamiento , actividadesPlaneadas);
+    }
     }
 }
